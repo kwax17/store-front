@@ -7,14 +7,19 @@ router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
   Category.findAll({
-    attributes: ['id', 'category_name'],
     include: [
       {
         model: Product,
-        attributes: ['product_name']
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }]
   })
-  .then(dbCategoryData => res.json(dbCategoryData))
+  .then(dbCategoryData => {
+    if (!dbCategoryData) {
+        res.status(404).json({ message: "That category doesn't seem to exist" });
+        return;
+    }
+    res.json(dbCategoryData);
+  })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
@@ -28,16 +33,15 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: ['id', 'category_name'],
     include: [
       {
         model: Product,
-        attributes: ['product_name']
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
   }).then(dbCategoryData => {
       if (!dbCategoryData) {
-        res.status(404).json({ message: 'No category found with this id' });
+        res.status(404).json({ message: "That category doesn't seem to exist" });
         return;
       }
       res.json(dbCategoryData);
@@ -55,10 +59,7 @@ router.post('/', (req, res) => {
     category_name: req.body.category_name
   })
   .then(dbCategoryData => 
-    {
-      console.log(dbCategoryData);
-      res.json(dbCategoryData)
-    })
+    {res.json(dbCategoryData)})
   .catch(err => {
     console.log(err);
     res.status(500).json(err);

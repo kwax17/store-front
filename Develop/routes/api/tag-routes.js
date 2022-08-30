@@ -7,11 +7,10 @@ router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   Tag.findAll({
-    attributes: ['id', 'tag_name'],
     include: [
       {
         model: Product,
-        attributes: ['product_name']
+        attributes: ['product_name', 'price', 'stock', 'category_id']
       }
     ]
   })
@@ -33,7 +32,7 @@ router.get('/:id', (req, res) => {
     include: [
       {
         model: Product,
-        attributes: ['product_name']
+        attributes: ['product_name', 'price', 'stock', 'category_id']
       }
     ]
   }).then(dbTagData => {
@@ -55,10 +54,7 @@ router.post('/', (req, res) => {
     tag_name: req.body.tag_name
   })
   .then(dbTagData => 
-    {
-      console.log(dbTagData);
-      res.json(dbTagData)
-    })
+    {res.json(dbTagData)})
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
