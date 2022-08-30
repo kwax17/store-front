@@ -26,7 +26,7 @@ Youtube: https://youtu.be/8O_hu1rFqb4
 ![Video showing tag routes](./images/tag-routes.mov)
 Youtube: https://youtu.be/GrOOeG6a2tc
 
-![Video showing tag routes](./images/product-routes.mov)
+![Video showing product routes](./images/product-routes.mov)
 Youtube: https://youtu.be/1pR7Im2HicU
 
 ## Questions
